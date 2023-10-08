@@ -12,4 +12,4 @@ This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 I
 
 Thanks following work:
 
-- the cheat sheet template is modified from Drew Ulick's work [130 Cheat Sheet](https://www.overleaf.com/articles/130-cheat-sheet/ntwtkmpxmgrp) under Creative Commons CC BY 4.0.
+- The cheat sheet template is modified from Drew Ulick's work [130 Cheat Sheet](https://www.overleaf.com/articles/130-cheat-sheet/ntwtkmpxmgrp) under Creative Commons CC BY 4.0.
