@@ -1,15 +1,131 @@
 \documentclass[a4paper]{article}
 \usepackage{cheatsheet}
 \usepackage{multicol}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ulem}
 
 
+\setenumerate[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt, leftmargin=*}
+\setitemize[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt, leftmargin=*}
+\setitemize[2]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt, leftmargin=*}
+\setdescription{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt, leftmargin=*}
 
 \begin{document}
-\begin{multicols*}{2}
 
-    \begin{cheatsheetblock}{title}
-        $f(x) = a$
-    \end{cheatsheetblock}
+\begin{cheatsheetblock}{Relational Data Model}
+    \begin{tabularx}{\linewidth}{|X|X|X|}
+        \hline
+        \textbf{Formal} & \textbf{Informal} & \textbf{Denoted}                             \\
+        \hline
+        Relation Schema & Table Define      & $R(A_1, A_2,\allowbreak\dots, A_n)$          \\
+        \hline
+        \makecell[l]{Relation                                                              \\relation state\\relation instance}
+                        & Table             & $r(R) := \{t_1, t_2\allowbreak,\dots, t_m\}$ \\
+        \hline
+        Tuple           & Row               & $t_1:=t(A_1)$                                \\
+        \hline
+        Attribute       & Column            & $A_1$                                        \\
+        \hline
+        Domain          & Data Type         & $D:=\mathrm{dom}(A_i)$                       \\
+        \hline
+    \end{tabularx}
+    \begin{itemize}[topsep=0pt, noitemsep, ]
+        \item $t_1 \in r(R) \subseteq R(A_1, \dots, A_n)$
+        \item $t_1 \in \mathrm{dom}(A_1) \times \dots \times \mathrm{dom}(A_n)$
+        \item $r(R) \subseteq \mathrm{dom}(A_1) \times \dots \times \mathrm{dom}(A_n)$
+        \item $R(A_1, \dots, A_n) \equiv \mathrm{dom}(A_1) \times \dots \times \mathrm{dom}(A_n)$
+    \end{itemize}
+\end{cheatsheetblock}
 
-\end{multicols*}
+\begin{cheatsheetblock}{Keys}
+    Types
+    \begin{itemize}
+        \item superkey: uniquely identifes any tuple in $r(R)$.
+        \item candidate key: no proper subset of $K$ is a superkey.
+        \item primary key: chosen from the candidate keys.
+        \item prime attribute: attribute occurring in a candidate key.
+    \end{itemize}
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock}{ Functional Dependencies}
+    Notation:
+    \begin{itemize}
+        \item $X \rightarrow Y$ \hfill FD: Dependent to Determinant
+        \item $\Sigma \models X \rightarrow Y$, \hfill FD set imply FD.
+        \item $\Sigma^*$, \hfill all FD implied by $\Sigma$.
+        \item $X^+$, \hfill closure, all attributes $X \rightarrow$.
+    \end{itemize}
+    Rules (Armstrong’s inference rules)
+    \begin{itemize}
+        \item $X Y \rightarrow Y$ \hfill Reﬂexive rule
+        \item $\{X \rightarrow Y\} \models X Z \rightarrow Y Z$ \hfill Augmentation rule
+        \item $\{X \rightarrow Y, Y \rightarrow Z\} \models X \rightarrow Z$ \hfill Transitive rule
+        \item Union rule, Decomposition rule
+    \end{itemize}
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock}{FD Algorithm}
+    check $\Sigma \models X \rightarrow W$ \hfill compute $X^+$ by repeatedly apply FD in $\Sigma$.
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock}{Minimal Cover}
+    \begin{enumerate}
+        \item Dependent R side: $X \rightarrow\left\{A_1, A_2\right\} \implies X \rightarrow A_1, X \rightarrow A_2$
+        \item Determinant L side: replace $XY \rightarrow \left\{A\right\}$ to $X \rightarrow \left\{A\right\}$, if ok.
+        \item Remove redundant FD
+    \end{enumerate}
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock}{Find Keys}
+    \begin{enumerate}
+        \item compute all $X^+$
+        \item $X^+ = R$, X is a superkey
+        \item no proper subset in $X^+$ is a superkey, X is a (candidate) key
+    \end{enumerate}
+
+    \textbf{trick}
+    start with attribute never appear on the R side. Must be a key attribute.
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock}{BCNF (Boyce-Codd Normal Form)}
+    \textbf{def}: All non-trivial FDs, left side is a superkey.
+
+    \textbf{Algorithm} start with $S = \left\{R^\prime\right\}$ and iter
+    \begin{enumerate}
+        \item find FD violations in $R \in S$
+        \item replace the $R$ by $XY$ and $R-Y$
+    \end{enumerate}
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock}{3NF (3rd Normal Form)}
+    \textbf{def}: All non-trivial FDs, left side is a superkey or right side is prime attribute.
+
+    \textbf{Algorithm} start with $S = \varnothing$ and minimal cover $\Sigma^\prime$.
+    \begin{enumerate}
+        \item group by L-side. \hfill $X \rightarrow A_1, A_2$
+        \item combine attributes within group \hfill $R = \left\{X, A_1, A_2\right\}$
+        \item remove redundant FDs \hfill \sout{$R_1 = \left\{X, A_1\right\}$}, $R_2 = \left\{X, A_1, A_2\right\}$
+        \item if $S$ contain no superkey, add one from $R$. \hfill $S = \left\{R_2, R_0\right\}$
+        \item project FDs onto each schema
+    \end{enumerate}
+\end{cheatsheetblock}
+
+
+
+
+
+
+
+
+
+
+
+
+% TODO: anomalies
+
 \end{document}
