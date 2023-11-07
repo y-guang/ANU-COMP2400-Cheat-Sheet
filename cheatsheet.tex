@@ -8,6 +8,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{ulem}
+\usepackage{pdfpages}
+\usepackage{graphicx}
 
 
 \setenumerate[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt, leftmargin=*}
@@ -16,6 +18,9 @@
 \setdescription{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=0pt, leftmargin=*}
 
 \begin{document}
+
+% \begin{multicols}{3}
+
 
 \begin{cheatsheetblock}{Relational Data Model}
     \begin{tabularx}{\linewidth}{|X|X|X|}
@@ -43,7 +48,6 @@
 \end{cheatsheetblock}
 
 \begin{cheatsheetblock}{Keys}
-    Types
     \begin{itemize}
         \item superkey: uniquely identifes any tuple in $r(R)$.
         \item candidate key: no proper subset of $K$ is a superkey.
@@ -115,17 +119,68 @@
     \end{enumerate}
 \end{cheatsheetblock}
 
+\begin{cheatsheetblock}{Relational Algebra}
+    \begin{itemize}
+        \item $\sigma_{\text {Sex}\neq\text {`M'}} (\text{Employee})$ \hfill SELECT * \textbf{WHERE sex != `M'}
+              \subitem selection, commutative
+        \item $\pi_{\text {Name}, \text {Id}} (\text {Employee})$ \hfill SELECT \textbf{DISTINCT name, Id}
+              \subitem project, not commutative
+        \item $R_1 \cup R_2$ \hfill UNION (no ALL)
+        \item $R_1 \cap R_2$ \hfill INTERSECT
+        \item $R_1 - R_2$ \hfill EXCEPT
+        \item $R_1 \times R_2$ \hfill FROM R1, R2
+              \subitem cross product
+        \item $R_1 \bowtie_{Id = Sid} R_2$ \hfill JOIN ON R1.Id = R2.Sid
+              \subitem $\equiv \sigma_{Id = Sid} (R_1 \times R_2)$
+        \item $\rho_{R^{\prime}\left(A_1, \dots, A_n\right)}(R)$ \hfill (SELECT R1 \textbf{AS A1}, \dots) \textbf{AS $R^{\prime}$}
+              \subitem rename, allow only $\left(A_1, \dots, A_n\right)$ or only $R^{\prime}$.
+    \end{itemize}
+    a complete set: $\left\{\sigma, \pi, \rho, \cup, -, \times\right\}$
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock} {Opt Heuristic Rules}
+    \begin{itemize}
+        \item $\sigma_{\varphi}\left(\sigma_\psi(R)\right) \equiv \sigma_{\varphi \wedge \psi}(R)$
+        \item $\pi_X\left(\pi_Y(R)\right) \equiv \pi_X(R)$ if $X \subseteq Y$
+        \item $\sigma_{\varphi}\left(R_1 \times R_2\right) \equiv R_1 \bowtie_{\varphi} R_2$
+        \item $\sigma_{\varphi_1}\left(R_1 \bowtie_{\varphi_2} R_2\right) \equiv R_2 \bowtie_{\varphi_1 \wedge \varphi_2} R_1$
+        \item $\sigma_{\varphi}\left(R_1 \bowtie R_2\right) \equiv \sigma_{\varphi}\left(R_1\right) \bowtie R_2$, if $\varphi$ solely on $R_1$
+        \item $\sigma_{\varphi_1 \wedge \varphi_2}\left(R_1 \bowtie R_2\right) \equiv \sigma_{\varphi_1}\left(R_1\right) \bowtie \sigma_{\varphi_2}\left(R_2\right)$
+              if $\varphi_1$ solely on $R_1$ and $\varphi_2$ on $R_2$. $\bowtie$ can be $\times$
+        \item $\pi_X\left(R_1 \bowtie R_2\right) \equiv \pi_{X_1}\left(R_1\right) \bowtie \pi_{X_2}\left(R_2\right)$ If the join condition involves only attributes in $X$.
+        \item $\pi_X\left(R_1 \bowtie R_2\right) \equiv \pi_X\left(\pi_{X_1}\left(R_1\right) \bowtie \pi_{X_2}\left(R_2\right)\right)$ If the join condition involves NOT only attributes in $X$.
+    \end{itemize}
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock} {Query Processing}
+    \begin{itemize}
+        \item Parser: checks the name, type, permission.
+        \item Translator: decomposed query $\rightarrow$ query blocks; \\ translated into a Relational Algebra expression.
+        \item Optimiser: optimisation
+        \item Evaluation engine: evaluate the query execution plan
+    \end{itemize}
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock} {Optimisation}
+    \begin{itemize}
+        \item Semantic query optimisation: using constraints.
+        \item Rule-based query optimisation.
+              \begin{itemize}
+                  \item Push-down selection, projection; Re-ordering joins
+              \end{itemize}
+        \item Cost-based query optimisation: estimate cost among plans, choose most cost-effective plan
+    \end{itemize}
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock}{Title of the Block}
+    \includegraphics[width=\linewidth, page=1]{pic/EER.pdf}
+\end{cheatsheetblock}
 
 
+% \end{multicols}
 
 
-
-
-
-
-
-
-
+% TODO: ER and EER Diagrams in W4O3
 % TODO: anomalies
 
 \end{document}

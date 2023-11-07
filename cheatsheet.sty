@@ -7,6 +7,7 @@
 \pagestyle{empty}
 \newlength{\cheatsheetPageWidth}
 \setlength{\cheatsheetPageWidth}{0.03\paperwidth}
+\setlength{\columnsep}{0.0cm}
 \RequirePackage[landscape, margin=\cheatsheetPageWidth]{geometry}
 \renewcommand{\normalsize}{\fontsize{8}{9}\selectfont}
 
@@ -18,7 +19,6 @@
 
 \tikzstyle{cheatsheetBlockBody} = [
 draw=black,
-dash pattern=on 3pt off 7pt,
 fill=white,
 rectangle,
 rounded corners,
@@ -30,7 +30,7 @@ inner ysep=\cheatsheetSepLen
 draw=black,
 fill=white,
 very thick,
-text=red,
+text=red!80!black,
 font=\sffamily
 ]
 
