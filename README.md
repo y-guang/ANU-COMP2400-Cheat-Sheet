@@ -2,6 +2,15 @@
 
 A cheat sheet for COMP2400 Rational Database of The Australian National University.
 
+**Download** [Here](https://github.com/y-guang/ANU-COMP2400-Cheat-Sheet/releases/tag/stable)
+
+## Preview
+
+![cheatsheet](pic/comp2400-cheatsheet.jpg)
+
+![cheatsheet-handwritten](pic/comp2400-cheatsheet-handwrite.jpg)
+
+
 ## License
 
 This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
