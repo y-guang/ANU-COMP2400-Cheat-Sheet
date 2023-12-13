@@ -2,6 +2,8 @@
 !.gitignore
 !pic
 !pic/*
+!handwrite
+!handwrite/*
 !cheatsheet.sty
 !cheatsheet.tex
 !README.md
