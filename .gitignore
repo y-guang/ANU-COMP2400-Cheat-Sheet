@@ -1,5 +1,7 @@
 *
 !.gitignore
+!pic
+!pic/*
 !cheatsheet.sty
 !cheatsheet.tex
 !README.md

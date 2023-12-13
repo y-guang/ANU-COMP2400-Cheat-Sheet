@@ -19,8 +19,7 @@
 
 \begin{document}
 
-% \begin{multicols}{3}
-
+\begin{multicols}{3}
 
 \begin{cheatsheetblock}{Relational Data Model}
     \begin{tabularx}{\linewidth}{|X|X|X|}
@@ -172,15 +171,63 @@
     \end{itemize}
 \end{cheatsheetblock}
 
-\begin{cheatsheetblock}{Title of the Block}
+\begin{cheatsheetblock}{(Enhanced) Entity-Relationship (EER) Model}
     \includegraphics[width=\linewidth, page=1]{pic/EER.pdf}
 \end{cheatsheetblock}
 
+\begin{cheatsheetblock}{Database Transactions}
+    \textbf{ACID}: Atomicity, Consistency, Isolation, Durability.
 
-% \end{multicols}
+    C - defined business rules; I - concurrent; D - persist.
 
+    \textbf{Problems}
+    \begin{itemize}
+        \item Lost Update: R1R2,\textbf{W1W2},C1C2 \hfill S?
+        \item Dirty Read: R1W1R2,\textbf{A1}(abort),W2C2 \hfill CRS
+        \item Unrepeated read: R1,R2\textbf{W2}C2,R1 \hfill RS
+        \item Phantom read: R1,\textbf{W2}C2,R1 \hfill S
+    \end{itemize}
+    
+    \textbf{Isolation Level}: Read [U]ncommitted, Read [C]ommitted, Repeatable [R]eads, [S]erializable
+\end{cheatsheetblock}
 
-% TODO: ER and EER Diagrams in W4O3
-% TODO: anomalies
+\begin{cheatsheetblock}{Database Security}
+    \textbf{Threats}: Lost of confidentiality, integrity, availability.
+
+    \textbf{Control}: Access, Inference, Flow, Data encryption.
+
+    \textbf{Access}: Discretionary (privileges), Mandatory, Role-based.
+
+    Privileges: \hfill GRANT operations ON object TO users [OPT]
+    
+    Revoking: \hfill REVOKE operations ON object FROM users
+
+    view: \hfill CREATE VIEW name AS SELECT \dots
+
+    Mandatorys: top secret, secret, confidential, unclassified
+
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock}{SQL Injection}
+    \dots WHERE ... password=`\underline{p' OR `x'=`x}';
+
+    \dots WHERE ... password=`\underline{p'; DROP TABLE users; --;}';
+
+    Solution: Parameterized queries (placeholder), Input validation (escape)
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock}{Database Management System}
+    For: defining, constructing(store), manipulating, sharing.
+
+    ANSI/SPARC Architecture: External, Conceptual/logical, Internal.
+
+    Logical Data Independence; Physical Data Independence.
+\end{cheatsheetblock}
+
+\begin{cheatsheetblock}{Update Anomalies}
+    Insertion, Deletion, Modifcation.
+\end{cheatsheetblock}
+
+\end{multicols}
 
 \end{document}
